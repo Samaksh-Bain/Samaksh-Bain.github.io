@@ -1,0 +1,198 @@
+<html>
+
+<head>
+	<!-- Load plotly.js into the DOM -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+	<script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+</head>
+
+<body>
+	<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+    <script>
+ var data = [];
+d3.csv("Priceovertime_pivot.csv",
+        
+        // When reading the csv, I must format variables:
+        function(d){
+          return { Month : d3.timeParse("%m/%d/%Y")(d.Month),
+                    Amazon:d.Amazon,
+                    D2COnline:d.D2COnline,
+                    Other:d.Other,
+                    Retailercom:d.Retailercom,
+                    TraditionalRetail:d.TraditionalRetail
+                }
+        }).then(function(d){
+
+       
+           
+   
+            var colors = ['#46647B','#7891AA','#A3BCD3','#104C3E','#507867','#83AC9A','#BBCABA',
+                    '#AB8933',
+                    '#C6AA3D',
+                    '#E9CD49',
+                    '#F2E88A',
+                    '#623B34',
+                    '#973b74',
+                    '#ba749f',
+                    '#d9abc6'];
+
+            var lineSize = [2, 2, 2,2,4];
+
+            var labels = ['Amazon','D2COnline','Other','Retailercom','TraditionalRetail']
+            var xData=[];
+            for (var i=0;i<labels.length;i++){
+                var result =[];
+                for (var j=0;j<d.length;j++){
+                    result.push(d[j].Month);
+                }
+                xData.push(result);
+            }
+
+
+            var yData=[];
+            for (var i=0;i<labels.length;i++){
+                var result=[];
+                var colname=labels[i];
+                for(var j=0;j<d.length;j++){
+                    result.push(d[j][colname]);
+                }
+                yData.push(result);
+            }
+
+
+for ( var i = 0 ; i < xData.length ; i++ ) {
+        var result = {
+            x: xData[i],
+            y: yData[i],
+            type: 'scatter',
+            mode: 'lines',
+            line: {
+            color: colors[i],
+            width: lineSize[i]
+            }
+        };
+        var result2 = {
+            x: [xData[i][0], xData[i][xData[i]['length']-1]],
+            y: [yData[i][0], yData[i][yData[i]['length']-1]],
+            type: 'scatter',
+            mode: 'markers',
+            marker: {
+            color: colors[i],
+            size: 12
+            }
+        };
+        data.push(result, result2);
+    }
+
+  
+
+
+var layout = {
+  showlegend: true,
+  height: 900,
+  width: 1525,
+  xaxis: {
+    autorange:true,
+    type:'date',
+    showline: true,
+    showgrid: false,
+    showticklabels: true,
+    linecolor: 'rgb(204,204,204)',
+    linewidth: 2,
+    autotick: true,
+    ticks: 'outside',
+    
+    tickcolor: 'rgb(204,204,204)',
+    tickwidth: 2,
+    ticklen: 5,
+    tickfont: {
+      family: 'Arial',
+      size: 12,
+      color: 'rgb(82, 82, 82)'
+    }
+  },
+  yaxis: {
+    showgrid: false,
+    zeroline: false,
+    showline: true,
+    showticklabels: true
+  },
+  autosize: true,
+  margin: {
+    autoexpand: false,
+    l: 100,
+    r: 20,
+    t: 100
+  },
+  annotations: [
+    {
+      xref: 'paper',
+      yref: 'paper',
+      x: 0.0,
+      y: 1.05,
+      xanchor: 'left',
+      yanchor: 'bottom',
+      text: 'Sales by Channel',
+      font:{
+        family: 'Arial',
+        size: 30,
+        color: 'rgb(37,37,37)'
+      },
+      showarrow: false
+    },
+    {
+      xref: 'paper',
+      yref: 'paper',
+      x: 0.5,
+      y: -0.1,
+      xanchor: 'center',
+      yanchor: 'top',
+      text: '',
+      showarrow: false,
+      font: {
+        family: 'Arial',
+        size: 12,
+        color: 'rgb(150,150,150)'
+      }
+    }
+  ]
+} ;
+
+for( var i = 0 ; i < xData.length ; i++ ) {
+  var result = {
+    xref: 'paper',
+    x: 0.05,
+    y: yData[i][0],
+    xanchor: 'right',
+    yanchor: 'middle',
+    text:  yData[i][0],
+    showarrow: false,
+    font: {
+      family: 'Arial',
+      size: 16,
+      color: 'black'
+    }
+  };
+  var result2 = {
+    xref: 'paper',
+    x: 0.95,
+    y: yData[i][yData[i]['length']-1],
+    xanchor: 'right',
+    yanchor: 'top',
+    text: yData[i][yData[i]['length']-1] +labels[i] ,
+    font: {
+      family: 'Arial',
+      size: 16,
+      color: 'black'
+    },
+    showarrow: false
+  };
+
+  layout.annotations.push(result, result2);
+}
+        
+Plotly.newPlot('myDiv', data, layout);
+});
+</script>
+</body>
+</html>

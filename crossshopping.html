@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Pyxis</title>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+    
+<script src="https://d3js.org/d3.v6.js"></script>
+<script type='text/javascript' src='https://amer.tableau.baintools.com/javascripts/api/viz_v1.js'></script>
+<script type='module' src='https://amer.tableau-dev.baintools.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
+
+<script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .vertical-menu {
+  width: auto;
+  list-style-type: none;
+  padding:0; margin:0
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: red;
+  color: white;
+  
+}
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: rgb(204,0,0);">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">PYXIS</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="accordion" id="view1acc">
+          <div class="accordion-item" >
+             <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Price over Time
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body" style="padding:0">
+                  <ul class="vertical-menu">
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html#vw1tableau">Tableau</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html#amchartviz">Amcharts</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html#v1plotly">Plotly</a>
+                      </li>
+                     
+                  </ul>
+                </div>
+              </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                 Sales over Time
+               </button>
+             </h2>
+             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+               <div class="accordion-body" style="padding:0;margin:0">
+                <ul class="vertical-menu">
+                  <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="SalesoverTime2.html#vw2Tableauviz">Tableau</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="SalesoverTime2.html#vw2amchartviz">Amcharts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="salesovertime2.html#vw2plotly">Plotly</a>
+                  </li>
+                 
+              </ul>
+               </div>
+             </div>
+         </div>
+         <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+               Cross Shopping
+             </button>
+           </h2>
+           <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+             <div class="accordion-body" style="padding:0;margin:0">
+              <ul class="vertical-menu">
+                <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="#Tableauviz">Tableau</a>
+                </li>
+                 <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="#amchartviz">Amcharts</a>
+                </li>
+               <!-- <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="#">Plotly</a>
+                </li> -->
+               
+            </ul>
+             </div>
+           </div>
+       </div>
+        </div>
+     
+  
+         
+        </div>
+      </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     
+     <section id="Tableauviz">
+        <tableau-viz id='tableau-viz' src='https://amer.tableau-dev.baintools.com/t/PYXIS_UAT/views/GeneralMerchandise_Verisk_Shareofwallet/Shareofwalletofselectretailers' width='1525' height='927' hide-tabs toolbar='bottom' ></tableau-viz>
+    </section>
+      
+        <hr>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    
+    <script>
+        am5.ready(function() {
+        
+        // Create root element
+        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+        var root = am5.Root.new("amchartviz");
+        
+        
+        // Set themes
+        // https://www.amcharts.com/docs/v5/concepts/themes/
+        root.setThemes([
+          am5themes_Animated.new(root)
+        ]);
+        
+        
+        // Create chart
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/
+        var chart = root.container.children.push(am5xy.XYChart.new(root, {
+          panX: true,
+          panY: true,
+          wheelX: "panX",
+          wheelY: "panY",
+          layout: root.verticalLayout
+        }));
+        
+        // Add scrollbar
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+        /*chart.set("scrollbarX", am5.Scrollbar.new(root, {
+          orientation: "horizontal"
+        })); */
+        
+       /*var data = am5.net.load("/sow.csv").then(function(result) {
+      // This gets executed when data finishes loading
+      series.data.setAll(am5.CSVParser.parse(result.response, {
+        delimiter: ";",
+        reverse: true,
+        skipEmpty: true,
+        useColumnNames: true
+      }));
+    }).catch(function(result) {
+      // This gets executed if there was an error loading URL
+      // ... handle error
+      console.log("Error loading " + result.xhr.responseURL);
+    });*/
+    
+    
+        var data = [
+     {
+       "Merchant": "Ashley",
+       "Ashley": 232818143.6,
+       "Big Lots": 6315000.84,
+       "Bob's": 3456586.26,
+       "Ikea": 10617164.45,
+       "Mattress Firm": 10307604.73,
+       "Pottery Barn": 7720566.42,
+       "Restoration Hardware": 2681781.43,
+       "Rooms To Go": 6624073.18,
+       "Wayfair": 28943877.26,
+       "West Elm": 2707959.62
+     },
+     {
+       "Merchant": "Big Lots",
+       "Ashley": 35835352.04,
+       "Big Lots": 238441488,
+       "Bob's": 11199410.48,
+       "Ikea": 42876712.2,
+       "Mattress Firm": 26708151.85,
+       "Pottery Barn": 12298856.09,
+       "Restoration Hardware": 5823452.12,
+       "Rooms To Go": 16557337.49,
+       "Wayfair": 73362686.61,
+       "West Elm": 4261218
+     },
+     {
+       "Merchant": "Bob's",
+       "Ashley": 3607138.27,
+       "Big Lots": 2116037.6,
+       "Bob's": 70964061.77,
+       "Ikea": 3655729.86,
+       "Mattress Firm": 2731841.34,
+       "Pottery Barn": 1140788.12,
+       "Restoration Hardware": 217382.61,
+       "Rooms To Go": null,
+       "Wayfair": 7362013.98,
+       "West Elm": 454245.14
+     },
+     {
+       "Merchant": "Ikea",
+       "Ashley": 33616603.48,
+       "Big Lots": 23267725.7,
+       "Bob's": 11203249.15,
+       "Ikea": 394262669.4,
+       "Mattress Firm": 34722094.66,
+       "Pottery Barn": 44237942.88,
+       "Restoration Hardware": 34439721.46,
+       "Rooms To Go": 13706652.95,
+       "Wayfair": 121542809.2,
+       "West Elm": 34641500.93
+     },
+     {
+       "Merchant": "Mattress Firm",
+       "Ashley": 9981099.26,
+       "Big Lots": 3903637.94,
+       "Bob's": 2559757.01,
+       "Ikea": 10624499.99,
+       "Mattress Firm": 259260610.9,
+       "Pottery Barn": 14475042.45,
+       "Restoration Hardware": 17038207.06,
+       "Rooms To Go": 5477982.94,
+       "Wayfair": 26237526.44,
+       "West Elm": 6722113.32
+     },
+     {
+       "Merchant": "Pottery Barn",
+       "Ashley": 12756025.48,
+       "Big Lots": 4924351.01,
+       "Bob's": 2410488.98,
+       "Ikea": 32051925.85,
+       "Mattress Firm": 27385928.6,
+       "Pottery Barn": 252394313.4,
+       "Restoration Hardware": 95332792.5,
+       "Rooms To Go": 5534309.37,
+       "Wayfair": 100404199.3,
+       "West Elm": 46444963.16
+     },
+     {
+       "Merchant": "Restoration Hardware",
+       "Ashley": 983151.77,
+       "Big Lots": 338887.97,
+       "Bob's": 50216.38,
+       "Ikea": 5404238.28,
+       "Mattress Firm": 7318425.2,
+       "Pottery Barn": 31309388.38,
+       "Restoration Hardware": 201197144.1,
+       "Rooms To Go": 626034.64,
+       "Wayfair": 20851242.73,
+       "West Elm": 13186342.62
+     },
+     {
+       "Merchant": "Rooms To Go",
+       "Ashley": 5676379.04,
+       "Big Lots": 2371944.83,
+       "Bob's": null,
+       "Ikea": 4357642.84,
+       "Mattress Firm": 4909352.15,
+       "Pottery Barn": 2405410.66,
+       "Restoration Hardware": 1437104.68,
+       "Rooms To Go": 102064280.8,
+       "Wayfair": 10855398.18,
+       "West Elm": 1005407.33
+     },
+     {
+       "Merchant": "Wayfair",
+       "Ashley": 47302935.72,
+       "Big Lots": 26185663.14,
+       "Bob's": 13059935.34,
+       "Ikea": 79327410.61,
+       "Mattress Firm": 52568712.6,
+       "Pottery Barn": 93069705.71,
+       "Restoration Hardware": 70521763.89,
+       "Rooms To Go": 21005676.89,
+       "Wayfair": 674817597.3,
+       "West Elm": 49365712.29
+     },
+     {
+       "Merchant": "West Elm",
+       "Ashley": 3574694.79,
+       "Big Lots": 1170874.21,
+       "Bob's": 676653.53,
+       "Ikea": 21363494.46,
+       "Mattress Firm": 11401525.25,
+       "Pottery Barn": 50773798.09,
+       "Restoration Hardware": 50811336.86,
+       "Rooms To Go": 1647107.02,
+       "Wayfair": 50488945.4,
+       "West Elm": 120540138.5
+     }
+    ]
+        
+    chart.get("colors").set("colors", [
+          am5.color(0x333333),
+      am5.color(0x5C5C5C),
+      am5.color(0x858585),
+      am5.color(0x2D475A),
+      am5.color(0x46647B),
+      am5.color(0x7891AA),
+      am5.color(0xA3BCD3),
+      am5.color(0x104C3E),
+      am5.color(0x507867),
+      am5.color(0x83AC9A),
+      am5.color(0xBBCABA),
+      am5.color(0xAB8933),
+      am5.color(0xC6AA3D),
+      am5.color(0xE9CD49),
+      am5.color(0xF2E88A),
+      am5.color(0x623B34),
+      am5.color(0x973b74),
+      am5.color(0xba749f),
+ am5.color(0xd9abc6)
+
+    
+    ]);
+    
+    
+        // Create axes
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+        var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+          categoryField: "Merchant",
+          renderer: am5xy.AxisRendererX.new(root, {}),
+          tooltip: am5.Tooltip.new(root, {})
+        }));
+        
+        xAxis.data.setAll(data);
+    
+        // switching off grid lines
+        xAxis.get("renderer").grid.template.setAll({
+          location: 0,
+          strokeWidth: 0,
+          visible:false
+        });
+        
+    
+        var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+          min: 0,
+          max: 100,
+          numberFormat: "#'%'",
+          strictMinMax: true,
+          calculateTotals: true,
+          renderer: am5xy.AxisRendererY.new(root, {})
+        }));
+        yAxis.get("renderer").grid.template.setAll({
+          strokeWidth: 0,
+          visible:false
+        });
+        
+        // Add legend
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
+        var legend = chart.children.push(am5.Legend.new(root, {
+          centerX: am5.p50,
+          x: am5.p50
+        }));
+        
+        
+        // Add series
+        // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+        function makeSeries(name, fieldName) {
+          var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+            name: name,
+            stacked: true,
+            xAxis: xAxis,
+            yAxis: yAxis,
+            valueYField: fieldName,
+            valueYShow: "valueYTotalPercent",
+            categoryXField: "Merchant"
+            
+          }));
+        
+          series.columns.template.setAll({
+            tooltipText: "{categoryX}: {valueYTotalPercent.formatNumber('#.#')}%",
+            tooltipY: am5.percent(10)
+          });
+          series.data.setAll(data);
+        
+          // Make stuff animate on load
+          // https://www.amcharts.com/docs/v5/concepts/animations/
+          series.appear();
+        
+          series.bullets.push(function () {
+            return am5.Bullet.new(root, {
+              sprite: am5.Label.new(root, {
+                text: "{valueYTotalPercent.formatNumber('#.#')}%",
+                fill: root.interfaceColors.get("alternativeText"),
+                centerY: am5.p50,
+                centerX: am5.p50,
+                populateText: true
+            
+              })
+            });
+          });
+        
+          legend.data.push(series);
+        }
+    
+        
+       makeSeries("Ashley", "Ashley");
+        makeSeries("Big Lots", "Big Lots");
+        makeSeries("Bob's", "Bob's");
+        makeSeries("Ikea", "Ikea");
+        makeSeries("Mattress Firm", "Mattress Firm");
+        makeSeries("Pottery Barn", "Pottery Barn"); 
+        makeSeries("Restoration Hardware", "RH");
+        makeSeries("Rooms To Go", "Rooms To Go");
+        makeSeries("Wayfair", "Wayfair");
+        makeSeries("West Elm", "West Elm"); 
+        
+        
+        // Make stuff animate on load
+        // https://www.amcharts.com/docs/v5/concepts/animations/
+        chart.appear(1000, 100);
+        }); // end am5.ready()
+    
+        </script>           
+    <section id="amchartviz" style="background-color: rgb(247,247,247);height:900px;width: 1525px;">
+
+        
+    </section>
+      
+    </main>
+  </div>
+</div>
+
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+  </body>
+</html>

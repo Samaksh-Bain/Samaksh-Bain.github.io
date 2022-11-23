@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Pyxis</title>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+    
+<script src="https://d3js.org/d3.v6.js"></script>
+<script type='text/javascript' src='https://amer.tableau.baintools.com/javascripts/api/viz_v1.js'></script>
+
+<script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .vertical-menu {
+  width: auto;
+  list-style-type: none;
+  padding:0; margin:0
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: red;
+  color: white;
+  
+}
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: rgb(204,0,0);">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">PYXIS</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="accordion" id="view1acc">
+        <div class="accordion-item" >
+           <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Price over Time
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body" style="padding:0">
+                <ul class="vertical-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="#vw1tableau">Tableau</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="#amchartviz">Amcharts</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="#v1plotly">Plotly</a>
+                    </li>
+                   
+                </ul>
+              </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+               Sales over Time
+             </button>
+           </h2>
+           <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+             <div class="accordion-body" style="padding:0;margin:0">
+              <ul class="vertical-menu">
+                <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="SalesoverTime2.html#vw2Tableauviz">Tableau</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="SalesoverTime2.html#vw2amchartviz">Amcharts</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="salesovertime2.html#vw2plotly">Plotly</a>
+                </li>
+               
+            </ul>
+             </div>
+           </div>
+       </div>
+       <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+             Cross Shopping
+           </button>
+         </h2>
+         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+           <div class="accordion-body" style="padding:0;margin:0">
+            <ul class="vertical-menu">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="crossshopping.html#Tableauviz">Tableau</a>
+              </li>
+               <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="crossshopping.html#amchartviz">Amcharts</a>
+              </li>
+             <!-- <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">Plotly</a>
+              </li> -->
+             
+          </ul>
+           </div>
+         </div>
+     </div>
+      </div>
+   
+
+       
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     
+     
+        <section id="Tableauviz" class='tableauPlaceholder' style='width: 1525px; height: 950px;'>
+           <object class='tableauViz' width='1525' height='950' style='display:none;'>
+             <param name='host_url' value='https%3A%2F%2Famer.tableau.baintools.com%2F' /> 
+             <param name='embed_code_version' value='3' /> 
+             <param name='site_root' value='&#47;t&#47;PYXIS_PRODUCTION' />
+             <param name='name' value='CPG_Agg_Para&#47;Priceovertime' />'
+             <param name='tabs' value='no' />
+             <param name='toolbar' value='no' />
+             <param name='showAppBanner' value='false' />
+           </object>
+         
+        </section>
+    
+      
+        <hr>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    
+    <script>
+       am5.ready(function() {
+        var data;
+        am5.net.load("Priceovertime_pivot.csv").then(function(result) {
+    
+                data=am5.CSVParser.parse(result.response,{
+                useColumnNames:true,
+                delimiter:","
+
+            });
+    
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("amchartviz");
+    
+    
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([
+      am5themes_Animated.new(root)
+    ]);
+    
+    
+    // Create chart
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+    var chart = root.container.children.push(am5xy.XYChart.new(root, {
+      panX: false,
+      panY: false,
+      wheelX: "none",
+      wheelY: "none",
+      pinchZoomX:false
+    }));
+    
+    
+    // Add cursor
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+    var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+      behavior: "none"
+    }));
+    cursor.lineY.set("visible", false);
+    
+    
+    
+    // Create axes
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+    var xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
+      maxDeviation: 0.2,
+      baseInterval: {
+        timeUnit: "month",
+        count: 1
+      },
+      renderer: am5xy.AxisRendererX.new(root, {}),
+      tooltip: am5.Tooltip.new(root, {})
+    }));
+    
+    var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+      renderer: am5xy.AxisRendererY.new(root, {})
+    }));
+    
+    
+    // Add series
+    cols = Object.keys(data[0]);
+    cols =cols.slice(1);
+    // Add series
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    for (var i=0;i<5;i++){
+        var series = chart.series.push(am5xy.LineSeries.new(root, {
+      name: cols[i],
+      xAxis: xAxis,
+      yAxis: yAxis,
+      valueYField: cols[i],
+      valueXField: "Month" ,
+      legendValueText: "{valueY}",
+    tooltip: am5.Tooltip.new(root, {
+      pointerOrientation: "horizontal",
+      labelText: "{valueY}"
+    })
+        }));
+
+        series.strokes.template.setAll({
+      strokeWidth: 2
+    });
+    
+    series.get("tooltip").get("background").set("fillOpacity", 0.5);
+
+    series.data.processor = am5.DataProcessor.new(root, {
+            numericFields: [cols[i]],
+            dateFields: ["Month"],
+            dateFormat: "MM/yyyy"
+        });
+
+        series.bullets.push(function() {
+  return am5.Bullet.new(root, {
+    sprite: am5.Circle.new(root, {
+      templateField: "bulletSettings",
+      radius: 5
+    })
+  });
+});
+    // Set data
+    
+    series.data.setAll(data);
+    
+    // Make stuff animate on load
+    // https://www.amcharts.com/docs/v5/concepts/animations/
+    series.appear(1000);
+    }
+   
+    
+    
+    // Add scrollbar
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+    chart.set("scrollbarX", am5.Scrollbar.new(root, {
+      orientation: "horizontal"
+    }));
+    
+    
+    chart.appear(1000, 100);
+})
+    }); // end am5.ready()
+   
+      </script>
+      
+    <section id="amchartviz" style="background-color: rgb(247,247,247);height:900px;width: 1525px;">
+
+        
+    </section>
+    <script>
+      var data = [];
+     d3.csv("Priceovertime_pivot.csv",
+             
+             // When reading the csv, I must format variables:
+             function(d){
+               return { Month : d3.timeParse("%m/%d/%Y")(d.Month),
+                         Amazon:d.Amazon,
+                         D2COnline:d.D2COnline,
+                         Other:d.Other,
+                         Retailercom:d.Retailercom,
+                         TraditionalRetail:d.TraditionalRetail
+                     }
+             }).then(function(d){
+     
+            
+                
+        
+                 var colors = ['#46647B','#7891AA','#A3BCD3','#104C3E','#507867','#83AC9A','#BBCABA',
+                         '#AB8933',
+                         '#C6AA3D',
+                         '#E9CD49',
+                         '#F2E88A',
+                         '#623B34',
+                         '#973b74',
+                         '#ba749f',
+                         '#d9abc6'];
+     
+                 var lineSize = [2, 2, 2,2,4];
+     
+                 var labels = ['Amazon','D2COnline','Other','Retailercom','TraditionalRetail']
+                 var xData=[];
+                 for (var i=0;i<labels.length;i++){
+                     var result =[];
+                     for (var j=0;j<d.length;j++){
+                         result.push(d[j].Month);
+                     }
+                     xData.push(result);
+                 }
+     
+     
+                 var yData=[];
+                 for (var i=0;i<labels.length;i++){
+                     var result=[];
+                     var colname=labels[i];
+                     for(var j=0;j<d.length;j++){
+                         result.push(d[j][colname]);
+                     }
+                     yData.push(result);
+                 }
+     
+     
+     for ( var i = 0 ; i < xData.length ; i++ ) {
+             var result = {
+                 x: xData[i],
+                 y: yData[i],
+                 type: 'scatter',
+                 mode: 'lines',
+                 line: {
+                 color: colors[i],
+                 width: lineSize[i]
+                 }
+             };
+             var result2 = {
+                 x: [xData[i][0], xData[i][xData[i]['length']-1]],
+                 y: [yData[i][0], yData[i][yData[i]['length']-1]],
+                 type: 'scatter',
+                 mode: 'markers',
+                 marker: {
+                 color: colors[i],
+                 size: 12
+                 }
+             };
+             data.push(result, result2);
+         }
+     
+       
+     
+     
+     var layout = {
+       showlegend: true,
+       height: 900,
+       width: 1525,
+       xaxis: {
+         autorange:true,
+         type:'date',
+         showline: true,
+         showgrid: false,
+         showticklabels: true,
+         linecolor: 'rgb(204,204,204)',
+         linewidth: 2,
+         autotick: true,
+         ticks: 'outside',
+         
+         tickcolor: 'rgb(204,204,204)',
+         tickwidth: 2,
+         ticklen: 5,
+         tickfont: {
+           family: 'Arial',
+           size: 12,
+           color: 'rgb(82, 82, 82)'
+         }
+       },
+       yaxis: {
+         showgrid: false,
+         zeroline: false,
+         showline: true,
+         showticklabels: true
+       },
+       autosize: true,
+       margin: {
+         autoexpand: false,
+         l: 100,
+         r: 20,
+         t: 100
+       },
+       annotations: [
+         {
+           xref: 'paper',
+           yref: 'paper',
+           x: 0.0,
+           y: 1.05,
+           xanchor: 'left',
+           yanchor: 'bottom',
+           text: 'Price over Time',
+           font:{
+             family: 'Arial',
+             size: 30,
+             color: 'rgb(37,37,37)'
+           },
+           showarrow: false
+         },
+         {
+           xref: 'paper',
+           yref: 'paper',
+           x: 0.5,
+           y: -0.1,
+           xanchor: 'center',
+           yanchor: 'top',
+           text: '',
+           showarrow: false,
+           font: {
+             family: 'Arial',
+             size: 12,
+             color: 'rgb(150,150,150)'
+           }
+         }
+       ]
+     } ;
+     
+     for( var i = 0 ; i < xData.length ; i++ ) {
+       var result = {
+         xref: 'paper',
+         x: 0.05,
+         y: yData[i][0],
+         xanchor: 'right',
+         yanchor: 'middle',
+         text:  yData[i][0],
+         showarrow: false,
+         font: {
+           family: 'Arial',
+           size: 16,
+           color: 'black'
+         }
+       };
+       var result2 = {
+         xref: 'paper',
+         x: 0.95,
+         y: yData[i][yData[i]['length']-1],
+         xanchor: 'right',
+         yanchor: 'top',
+         text: yData[i][yData[i]['length']-1] +labels[i] ,
+         font: {
+           family: 'Arial',
+           size: 16,
+           color: 'black'
+         },
+         showarrow: false
+       };
+     
+       layout.annotations.push(result, result2);
+     }
+             
+     Plotly.newPlot('v1plotly', data, layout);
+     });
+     </script>
+     <section id="v1plotly">
+
+     </section>
+      
+    </main>
+  </div>
+</div>
+
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top sellers</title>
+    <!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+<script type='text/javascript' src='https://amer.tableau.baintools.com/javascripts/api/viz_v1.js'></script>
+<link rel="stylesheet" href="view.css">
+</head>
+<body>
+    <h2 style="text-align: center">Top sellers</h2>
+    <div id="Tableauviz" class='tableauPlaceholder' style='width: 1525px; height: 950px;'>
+        <object class='tableauViz' width='1525' height='950' style='display:none;'>
+        <param name='host_url' value='https%3A%2F%2Famer.tableau.baintools.com%2F' /> 
+        <param name='embed_code_version' value='3' /> 
+        <param name='site_root' value='&#47;t&#47;PYXIS_PRODUCTION' />
+        <param name='name' value='Amazon&#47;Topseller' />
+        <param name='tabs' value='no' />
+        <param name='toolbar' value='no' />
+        <param name='showAppBanner' value='false' />
+      </object>
+    </div>
+    <hr>
+    <div id="my_dataviz" style="background-color: rgb(247,247,247);">
+
+        
+    </div>
+    <hr>
+    <div id="highchartsviz">
+
+    </div>
+    <hr>
+    <div id="plotlyviz">
+
+    </div>
+    <script>
+
+        // set the dimensions and margins of the graph
+        const margin = {top: 20, right: 50, bottom: 30, left: 80},
+            width = 1525 - margin.left - margin.right,
+            height = 900 - margin.top - margin.bottom;
+        
+        // append the svg object to the body of the page
+        const svg = d3.select("#my_dataviz")
+          .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+        
+        //Read the data
+        d3.csv("AA_pricing over time.csv",
+        
+          // When reading the csv, I must format variables:
+          function(d){
+            return { Month : d3.timeParse("%m/%d/%Y")(d.Month), perunit : d.perunit ,Selectedsegment:d.Selectedsegment}
+          }).then(
+        
+          // Now I can use this dataset:
+          function(data) {
+            
+            const sumstat = d3.group(data, d => d.Selectedsegment);
+
+            // Add X axis --> it is a date format
+            const x = d3.scaleTime()
+              .domain(d3.extent(data, function(d) { return d.Month; }))
+              .range([ 0, width ]);
+            svg.append("g")
+              .attr("transform", `translate(0, ${height})`)
+              .call(d3.axisBottom(x));
+        
+            // Add Y axis
+            const y = d3.scaleLinear()
+              .domain([0, d3.max(data, function(d) { return +d.perunit; })])
+              .range([ height, 0 ]);
+            svg.append("g")
+              .call(d3.axisLeft(y));
+
+            
+            //color palette
+          
+            var color = d3.scaleOrdinal()
+          
+            .range(['#333333','#5C5C5C','#858585','#B4B4B4','#2D475A','#46647B','#7891AA','#A3BCD3','#104C3E','#507867','#83AC9A','#BBCABA',
+                    '#AB8933',
+                    '#C6AA3D',
+                    '#E9CD49',
+                    '#F2E88A',
+                    '#623B34',
+                    '#973b74',
+                    '#ba749f',
+                    '#d9abc6'])
+
+  
+        
+            // Add the line
+            svg.selectAll(".line")
+              .data(sumstat)
+              .join("path") 
+              
+              
+              .attr("fill", "none")
+              .attr("stroke", function(d){ return color(d[0]) })
+              .attr("stroke-width", 1.5)
+              .attr("d", function(d){
+                  return d3.line()
+                  .x(function(d) { return x(d.Month) })
+                  .y(function(d) { return y(d.perunit) })
+              (d[1])}
+                )
+
+                svg.append("g").selectAll("text")
+                .data(data)
+                .enter()
+                .append("text")
+                .attr("x", function(d) { return x(d.Month)  })
+                .attr("y", function(d) { return y(d.perunit)  })
+                .attr("fill", "red")
+                .text(function(d) { return d.perunit });
+        
+        })
+        </script>
+</body>
+</html>
